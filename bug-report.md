@@ -95,11 +95,11 @@ int* reversedcopied(int array[], int size)
     return copy;
 }
 
-int main 
+int main
 {
     const int size = 5;
    
-    int array[size] =  {191,65,98,478,99};
+    int array[size] = { 191,65,98,478,99 };
 
    
     int* copy = reversedcopied(array, size);
@@ -111,13 +111,12 @@ int main
     cout << endl;
 
     cout << "Copied array with reverse order is: ";
-    
+    for (int i = 0; i < size; i++)
         cout << copy[i] << endl;
     
 
-      
+       delete[] copy;
     return 0;
-}
 ```
 
 2. **What bug does the original code have?**
@@ -131,6 +130,49 @@ int main
 5. **The corresponding bug-free code or code snippet is:**
 
 ```
+// question16 assignment-5.cpp : This file contains the 'main' function. Program execution begins and ends there.
+//
+
+#include<iostream>
+
+using namespace std;
+
+
+int* reversedcopied(int array[], int size)
+{
+   
+    int* copy = new int[size];
+   
+    for (int i = 0; i < size; i++)
+    {
+        copy[i] = array[size - 1 - i];
+    }
+   
+    return copy;
+}
+
+int main() 
+{
+    const int size = 5;
+   
+    int array[size] = { 191,65,98,478,99 };
+
+   
+    int* copy = reversedcopied(array, size);
+
+   
+    cout << "the Original array is: ";
+    for (int i = 0; i < size; i++)
+        cout << array[i] << " ";
+    cout << endl;
+
+    cout << "Copied array with reverse order is: ";
+    for (int i = 0; i < size; i++)
+        cout << copy[i] << endl;
+    
+
+       delete[] copy;
+    return 0;
 
 
 ```
@@ -145,51 +187,32 @@ int main
 1. **The incorrect original code or code snippit that you wrote:**
 
 ```
+// assignment-5.cpp : This file contains the 'main' function. Program execution begins and ends there.
+//
+
 #include <iostream>
 using namespace std;
 
-
-int main()
+int doSomething(int* x, int* y) 
 {
-	int CAD;
-	int USD;
-	int A;
-	int B;
-	int currency{};
-
-	cout << "press 1 to convert USD to CAD" << endl;
-	cout << "press 2 to convert CAD to USD" << endl;
-	cin >> currency;
-
-	switch (currency) {
-	case 1 :
-		cout << " Enter the amount you want to enter ";
-		cin >> currency;
-		CAD = currency / 1.32;
-		cout << " Your USD equals " << endl;
-		cout << CAD << endl;
-		break;
-	case 2 :
-		cout << " Enter the amount you want to enter ";
-		USD = currency * 0.75;
-		cin >> currency;
-		cout << " Your CAD equals " << endl;
-		cout << USD << endl;
-		break;
-	default:
-		cout << " The currency exchange is... ";
-	}
-
-	return ;
-
-		
+    int temp = *x;
+    *x = *y * 5;
+    *y = temp * 3;
+    return *x + *y;
 }
+int main() 
 
+    int x = 10, y = 5;
+    cout << "values before calling doSomething(), x: " << x << ", y: " << y << endl;
+    int result = doSomething(&x, &y);
+    cout << "doSomething returned " << result << endl;
+    cout << "values after calling dosomething(), x: " << x << ", y: " << y << endl;
+    return 0;
+}
 ```
 
 2. **What bug does the original code have?**
-
-  at the end of the code, on the return line we must add 0, here it is missing.
+here, the doSomething in the line 209 is written incorrectly as it should be whith a captial S.
 
 3. **What misunderstanding of C++ concepts lead you to this incorrect code?**
    lack of concentration only.
@@ -198,48 +221,31 @@ int main()
 5. **The corresponding bug-free code or code snippet is:**
 
 ```
+// assignment-5.cpp : This file contains the 'main' function. Program execution begins and ends there.
+//
+
 #include <iostream>
 using namespace std;
 
-
-int main()
+int doSomething(int* x, int* y) 
 {
-	int CAD;
-	int USD;
-	int A;
-	int B;
-	int currency{};
-
-	cout << "press 1 to convert USD to CAD" << endl;
-	cout << "press 2 to convert CAD to USD" << endl;
-	cin >> currency;
-
-	switch (currency) {
-	case 1:
-		cout << " Enter the amount you want to enter ";
-		cin >> currency;
-		CAD = currency / 1.32;
-		cout << " Your USD equals " << endl;
-		cout << CAD << endl;
-		break;
-	case 2:
-		cout << " Enter the amount you want to enter ";
-		USD = currency * 0.75;
-		cin >> currency;
-		cout << " Your CAD equals " << endl;
-		cout << USD << endl;
-		break;
-	default:
-		cout << " The currency exchange is... ";
-	}
-
-	return 0;
-
-
+    int temp = *x;
+    *x = *y * 5;
+    *y = temp * 3;
+    return *x + *y;
+}
+int main() 
+{
+    int x = 10, y = 5;
+    cout << "values before calling doSomething(), x: " << x << ", y: " << y << endl;
+    int result = doSomething(&x, &y);
+    cout << "doSomething returned " << result << endl;
+    cout << "values after calling doSomething(), x: " << x << ", y: " << y << endl;
+    return 0;
 }
 
 
 ```
 
 6. **What is the take-away message from this bug?**
-   be carefull while u do the assignment
+   we should be carefull abouth the declared things when we write the code.
